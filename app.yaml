@@ -1,0 +1,12 @@
+runtime: python312
+
+handlers:
+- url: /.*
+  script: auto
+
+env_variables:
+  CLIENT_SECRET: "ab7da67fe5b0c6c2962ac786b2e67d5f"
+  CLIENT_ID: "87b28056e4f80a661be8ce69ff64b3cc"
+  SIGNING_SECRET: "8da2210a63d860b911748349c13ca625"
+  APP_ID: 10130458"
+

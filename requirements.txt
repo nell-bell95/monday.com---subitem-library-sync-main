@@ -1,0 +1,6 @@
+This project uses the following Python libraries:
+
+Python3.12
+Flask, to run a HTTP server 
+Requests, to make HTTP requests and receive data
+JSON, to serialize and deserializae JSON
