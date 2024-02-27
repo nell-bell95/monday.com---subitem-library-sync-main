@@ -11,8 +11,21 @@ column_id_to_type_map = {
     'link': 'link',
     'text': 'text',
     'long_text': 'long_text',
-    'email': 'email'
+    'email': 'email',
+    'country': 'country'
 }
+
+def parse_country(column):
+    country_value = ''
+    country_code = ''
+    country_name = ''
+    if column['value'] is not None:
+        country_data = json.loads(column['value'])
+        country_code = country_data.get('countryCode') or ''
+        country_name = country_data.ger('countryName') or ''
+    return {column_id_to_type_map[column['type']]: {'country': country_value, 'countryCode': country_code, 'countryName': country_name}}    
+
+
 
 def parse_email(column):
     email_value = ''
@@ -75,5 +88,6 @@ column_handler_map = {
     'long_text': parse_text,
     'checkbox': parse_checkbox,
     'link': parse_link,
-    'email': parse_email
+    'email': parse_email,
+    'country': parse_country
 }
