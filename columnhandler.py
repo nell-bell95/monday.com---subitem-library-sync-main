@@ -23,7 +23,7 @@ def parse_country(column):
         country_data = json.loads(column['value'])
         country_code = country_data.get('countryCode') or ''
         country_name = country_data.ger('countryName') or ''
-    return {column_id_to_type_map[column['type']]: {'country': country_value, 'countryCode': country_code, 'countryName': country_name}}    
+    return {column_id_to_type_map[column['type']]: {'countryCode': country_code, 'countryName': country_name}}    
 
 
 
