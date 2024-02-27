@@ -12,19 +12,46 @@ column_id_to_type_map = {
     'text': 'text',
     'long_text': 'long_text',
     'email': 'email',
-    'country': 'country'
+    'country': 'country',
+    'location': 'location',
+    'world_clock': 'world_clock',
+    'tags': 'tags'
 }
 
+def parse_tags(column):
+    tags_ids = {}
+    if column['value'] is not None:
+        tags_data = json.loads(column['value'])
+        tags_ids = ','.join(str(tag['id']) for tag in tags_data.get('tag_ids', []))
+    return {column_id_to_type_map[column['type']]: tags_ids}
+
+def parse_worldclock(column):
+    worldclock_timezone = ''
+    if column['value'] is not None:
+        worldclock_data = json.loads(column['value'])
+        worldclock_timezone = worldclock_data.get('timezone') or ''
+    return {column_id_to_type_map[column['type']]: {'timezone': worldclock_timezone}}        
+
+def parse_location(column):
+    location_lat = ''
+    location_long = ''
+    location_address = ''
+    if column['value'] is not None:
+        location_data = json.loads(column['value'])
+        location_lat = location_data.get('lat') or ''
+        location_long = location_data.get('lng') or ''
+        location_address = location_data.get('address') or ''
+    return {column_id_to_type_map[column['type']]: {'lat': location_lat, 'lng': location_long, 'address': location_address}}    
+
+
 def parse_country(column):
-    country_value = ''
     country_code = ''
     country_name = ''
     if column['value'] is not None:
         country_data = json.loads(column['value'])
         country_code = country_data.get('countryCode') or ''
-        country_name = country_data.ger('countryName') or ''
+        country_name = country_data.get('countryName') or ''
     return {column_id_to_type_map[column['type']]: {'countryCode': country_code, 'countryName': country_name}}    
-
 
 
 def parse_email(column):
@@ -89,5 +116,8 @@ column_handler_map = {
     'checkbox': parse_checkbox,
     'link': parse_link,
     'email': parse_email,
-    'country': parse_country
+    'country': parse_country,
+    'location': parse_location,
+    'world_clock': parse_worldclock,
+    'tags': parse_tags
 }
