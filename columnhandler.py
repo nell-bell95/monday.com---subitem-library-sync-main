@@ -19,11 +19,11 @@ column_id_to_type_map = {
 }
 
 def parse_tags(column):
-    tags_ids = {}
+    tags_ids = []
     if column['value'] is not None:
         tags_data = json.loads(column['value'])
         tags_ids = ','.join(str(tag['id']) for tag in tags_data.get('tag_ids', []))
-    return {column_id_to_type_map[column['type']]: tags_ids}
+    return {column_id_to_type_map[column['type']]: {'tag_ids': tags_ids}}
 
 def parse_worldclock(column):
     worldclock_timezone = ''
